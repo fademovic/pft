@@ -1,0 +1,38 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "tsconfig.json",
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:react-hooks/recommended",
+    "prettier"
+  ],
+  "plugins": ["react", "react-hooks", "@typescript-eslint"],
+  "rules": {
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "import/prefer-default-export": ["off"],
+    "max-len": ["error", { "code": 130 }],
+    "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks.
+    "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies/,
+    "react/no-array-index-key": ["off"],
+    "comma-dangle": ["error", "never"],
+    "prefer-rest-params": ["off"],
+    "import/no-unresolved": ["off"],
+    "import/extension": ["off"],
+    "react/prop-types": ["off"],
+    "func-names": ["off"],
+    "no-param-reassign": ["off"],
+    "react/require-default-props": ["off"],
+    "no-debugger": ["off"],
+    "no-nested-ternary": ["off"]
+  }
+}

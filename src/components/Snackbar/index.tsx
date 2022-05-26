@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import SnackbarContent from '@mui/material/SnackbarContent';
 import Snackbar from '@mui/material/Snackbar';
@@ -34,9 +34,10 @@ export const CustomSnackbar = ({ items }: Props) => {
       autoHideDuration={5000}
       onClose={closeSnackbar}
     >
-      <div role="button" tabIndex={0} onClick={closeSnackbar} onKeyPress={() => {}}>
+      <div role="button" tabIndex={0} onClick={closeSnackbar}>
         {items.map(({ message, type }, index) =>
           Array.isArray(message) ? (
+            /*eslint-disable */ //TODO: Fix lint issue
             message.map((m) => <SnackbarContainer marginb="10px" message={m} type={type} key={index} />)
           ) : (
             <SnackbarContainer message={message} type={type} key={index} />

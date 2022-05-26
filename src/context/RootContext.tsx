@@ -1,12 +1,12 @@
 // Main context for things which are common to all components not only to specific part of it
 
-import { createContext, useEffect, useMemo, useState, useContext, useCallback } from 'react';
+import React, { createContext, useEffect, useMemo, useState, useContext, useCallback } from 'react';
 
 import { Notification, UserInfo } from 'utils/types';
 
-type RootContextProps = {
+interface RootContextProps {
   children: JSX.Element;
-};
+}
 
 interface RootContextType {
   notifications: Array<Notification>;

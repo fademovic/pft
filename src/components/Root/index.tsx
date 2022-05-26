@@ -1,6 +1,5 @@
 // Root file for handling app routes and eveyrthing common for each route like snackbar
-
-import { Suspense } from 'react';
+import React, { Suspense } from 'react';
 import styled from 'styled-components';
 import { Route, Routes } from 'react-router-dom';
 import LinearProgress from '@mui/material/LinearProgress';
@@ -8,7 +7,8 @@ import LinearProgress from '@mui/material/LinearProgress';
 import { useRoot } from 'context/RootContext';
 import { CustomSnackbar } from 'components/Snackbar';
 import { Main } from 'components/Layout';
-import { authorizedRoutes, anonymousRoutes } from 'utils/routes'; // Assume that in real app we will have anonymous routes or maybe admin specific
+// Assume that in real app we will have anonymous routes or maybe admin specific
+import { authorizedRoutes, anonymousRoutes } from 'utils/routes';
 import { RouteType } from 'utils/types';
 import theme from 'utils/theme';
 
@@ -37,6 +37,7 @@ const Root = () => {
     </Container>
   );
 };
+
 const Container = styled.div`
   height: 100%;
   background-color: ${theme.colors.background};

@@ -1,9 +1,10 @@
+import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 import Root from 'components/Root';
 import { RootProvider } from 'context/RootContext';
 
-const App = () => {
+function App() {
   return (
     <RootProvider>
       <BrowserRouter>
@@ -11,6 +12,6 @@ const App = () => {
       </BrowserRouter>
     </RootProvider>
   );
-};
+}
 
 export default App;
