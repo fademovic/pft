@@ -158,16 +158,17 @@ const Feed = () => {
 
   return (
     <div>
-      <ImportContainer>
-        <h1>CSV IMPORT </h1>
-        <label htmlFor="contained-button-file">
-          <FileInput accept=".csv" id="contained-button-file" type="file" onChange={onFileUpload} />
-          <Button variant="contained" component="span">
-            Upload
-          </Button>
-        </label>
-      </ImportContainer>
-      {memoizedRows.length > 0 && memoizedColumns.length > 0 && (
+      {memoizedRows.length === 0 && memoizedColumns.length === 0 ? (
+        <ImportContainer>
+          <h1>CSV IMPORT </h1>
+          <label htmlFor="contained-button-file">
+            <FileInput accept=".csv" id="contained-button-file" type="file" onChange={onFileUpload} />
+            <Button variant="contained" component="span">
+              Upload
+            </Button>
+          </label>
+        </ImportContainer>
+      ) : (
         <Content>
           <FilterWrapper>
             Total expenses by:
@@ -208,7 +209,6 @@ const ImportContainer = styled.div`
 `;
 
 const Content = styled.div`
-  margin-top: 100px;
   display: flex;
   flex-direction: column;
 `;
