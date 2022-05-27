@@ -5,7 +5,7 @@ describe('PFT Excersise Feed', () => {
     cy.visit('https://pft-finance-app.vercel.app/');
 
     // ASSERT
-    // Navbar
+    // Heading
     cy.get('h1').should('contain.text', 'CSV IMPORT');
 
     // Button as a span - cover for input
