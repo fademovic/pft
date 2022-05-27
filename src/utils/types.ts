@@ -11,3 +11,11 @@ export type RouteType = {
   path: string;
   Component: () => JSX.Element;
 };
+
+export type Row = {
+  departments: string;
+  project_name: string;
+  amount: string;
+  date: string;
+  member_name: string;
+};

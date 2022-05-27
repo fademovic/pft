@@ -2,10 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Column, useSortBy, useTable } from 'react-table';
+import { Row } from 'utils/types';
 
 type Props = {
-  data: Array<{ col1: string; col2: string }>;
-  columns: Array<Column<{ col1: string; col2: string }>>;
+  data: Array<Row>;
+  columns: Array<Column>;
 };
 
 const Table = ({ data, columns }: Props) => {
