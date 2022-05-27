@@ -13,6 +13,8 @@ import { regexForSplitingCSVRow } from 'utils/helpers';
 
 const DEFAULT_MEMBER_HEADER = 'member name';
 const NEW_MEMBER_HEADER = 'name';
+const AMOUNT_KEY = 'amount';
+const CURRENCY = '€';
 
 type DropdownType = {
   name: string;
@@ -27,8 +29,11 @@ const defaultDropdownValue: DropdownType = {
 const Feed = () => {
   const [columns, setColumns] = useState<Array<Column>>([]);
   const [rows, setRows] = useState<Array<Row>>([]);
+  const [filteredColumns, setFilteredColumns] = useState<Array<Column>>([]);
+  const [filteredRows, setFilteredRows] = useState<Array<Row>>([]);
   const [dropdownItems, setDropdownItems] = useState<Array<DropdownType>>([]);
-  const [filter, setFilter] = useState('');
+  const [filterValue, setFilterValue] = useState(defaultDropdownValue.key);
+  const [totalAmount, setTotalAmount] = useState(0);
   const { showNotification } = useRoot();
 
   const fileReader = new FileReader();
@@ -67,13 +72,17 @@ const Feed = () => {
 
       // This part I don't like becase code repeats
       // The reason why I did this is because accessor type in Column would demand cast on multiple places
+      // And also because of filtering, I always need all header names in dropdown
       const dropdownItem: DropdownType = {
         name: headerValue,
         key: header.trim()
       };
 
       headersWithAccessor.push(columnItem);
-      extractedDropdownItems.push(dropdownItem);
+
+      if (dropdownItem.key !== AMOUNT_KEY) {
+        extractedDropdownItems.push(dropdownItem);
+      }
     });
 
     setColumns(headersWithAccessor);
@@ -83,33 +92,69 @@ const Feed = () => {
   const extractRows = (csvText: string) => {
     const csvRows = csvText.slice(csvText.indexOf('\n') + 1).split('\n');
     const rowsData: Array<Row> = [];
+    let amount = 0;
 
     csvRows.map((row) => {
       // Solution from stack overflow, there is also a npm package for parsing csv but this can help for the task
-      const values = row.match(regexForSplitingCSVRow);
+      const rowValue = row.match(regexForSplitingCSVRow);
 
       // TODO: Map the data to avoid hardcoded indexes
-      if (values) {
+      if (rowValue) {
+        amount = amount + parseFloat(rowValue[2].slice(0, -1).replace(',', ''));
+
         rowsData.push({
-          departments: values[0],
-          project_name: values[1],
-          amount: values[2],
-          date: values[3],
-          member_name: values[4]
+          departments: rowValue[0],
+          project_name: rowValue[1],
+          amount: rowValue[2],
+          date: rowValue[3],
+          member_name: rowValue[4]
         });
       }
     });
 
+    setTotalAmount(amount);
     setRows(rowsData);
   };
 
   const onFilterChange = (event: SelectChangeEvent) => {
-    setFilter(event.target.value);
+    const { value } = event.target;
+    const newRows: Array<Row> = [];
+    const newColumns: Array<Column> = [
+      {
+        Header: AMOUNT_KEY,
+        accessor: AMOUNT_KEY
+      }
+    ];
+
+    columns.map((item) => {
+      if (item.accessor === value) {
+        newColumns.unshift({
+          Header: item.Header,
+          accessor: item.accessor
+        });
+      }
+
+      item.accessor === value || item.accessor === AMOUNT_KEY;
+    });
+
+    rows.map((item) => {
+      newRows.push({
+        [value]: item[value as keyof Row],
+        amount: item.amount
+      });
+    });
+
+    setFilteredColumns(newColumns);
+    setFilteredRows(newRows);
+    setFilterValue(value);
   };
 
   // This is recommended from react-table documentation
   const memoizedRows = useMemo(() => rows, [rows]);
   const memoizedColumns = useMemo(() => columns, [columns]);
+
+  const memoizedFilteredRows = useMemo(() => filteredRows, [filteredRows]);
+  const memoizedFilteredColumns = useMemo(() => filteredColumns, [filteredColumns]);
 
   return (
     <div>
@@ -126,7 +171,12 @@ const Feed = () => {
         <Content>
           <FilterWrapper>
             Total expenses by:
-            <Select id="simple-select" value={filter} onChange={onFilterChange} sx={{ width: '200px', marginLeft: '20px' }}>
+            <Select
+              id="simple-select"
+              value={filterValue}
+              onChange={onFilterChange}
+              sx={{ width: '200px', marginLeft: '20px', textTransform: 'capitalize' }}
+            >
               {dropdownItems.map((item) => (
                 <MenuItem key={item.key} value={item.key} sx={{ textTransform: 'capitalize' }}>
                   {item.name}
@@ -134,7 +184,13 @@ const Feed = () => {
               ))}
             </Select>
           </FilterWrapper>
-          <Table data={memoizedRows} columns={memoizedColumns} />
+          <Table
+            data={filterValue === defaultDropdownValue.key ? memoizedRows : memoizedFilteredRows}
+            columns={filterValue === defaultDropdownValue.key ? memoizedColumns : memoizedFilteredColumns}
+            total={totalAmount.toFixed(2).toLocaleString()}
+            currency={CURRENCY}
+            showTotal={filterValue !== defaultDropdownValue.key}
+          />
         </Content>
       )}
     </div>
