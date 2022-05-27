@@ -17,7 +17,9 @@ I am using typescript template.
 
 [Deployed on Vercel](https://pft-finance-app.vercel.app/)
 
-[Demo](https://www.loom.com/share/da692e9866de40c5b8ef4fb1810dad75)
+[Demo-APP](https://www.loom.com/share/da692e9866de40c5b8ef4fb1810dad75)
+
+[Demo-Cypress](https://www.loom.com/share/38088fd1ae604fba8b9acbefd1e158ae)
 
 ## Important notes
 
@@ -28,6 +30,8 @@ Expanded app with react-router-dom to show route handling.
 Complete app is wrapped with *Root component* and with *Root context*. This approach gives me the ability to easily reuse generic things which are relevant to the ALL components and routes. Like notifications and layout handling based on routes, accessing to the current logged user etc.
 
 Contexts which are specific to few routes/components will be created seperately. Root component and Root context should be **lightweight** and **as simple as possible**.
+
+**Cypress** e2e test is created as a bonus. 
 
 ## How to test
 
@@ -53,6 +57,10 @@ Importing amount as string, sorting it as number, displaying it again as string 
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `npm run e2e-test`
+
+Runs cypress e2e tests.
 
 ### `npm start`
 
