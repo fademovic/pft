@@ -31,7 +31,7 @@ Complete app is wrapped with *Root component* and with *Root context*. This appr
 
 Contexts which are specific to few routes/components will be created seperately. Root component and Root context should be **lightweight** and **as simple as possible**.
 
-**Cypress** e2e test is created as a bonus. 
+**Cypress** e2e test is created as a bonus and targets the deployed version of the app on Vercel. 
 
 ## How to test
 
