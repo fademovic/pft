@@ -77,26 +77,19 @@ const TableWrapper = styled.div`
 
   table {
     border-spacing: 0;
-    border: 1px solid black;
 
-    tr {
-      :last-child {
-        td {
-          border-bottom: 0;
-        }
-      }
+    th {
+      font-size: 24px;
+      font-weight: 400;
+      padding-right: 60px;
+      border-bottom: 1px solid black;
+      text-transform: capitalize;
     }
 
-    th,
     td {
-      margin: 0;
-      padding: 0.5rem;
-      border-bottom: 1px solid black;
-      border-right: 1px solid black;
-
-      :last-child {
-        border-right: 0;
-      }
+      font-size: 16px;
+      font-weight: 400;
+      padding: 20px 0;
     }
   }
 `;

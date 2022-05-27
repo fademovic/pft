@@ -12,7 +12,7 @@ const MainLayout = ({ children }: Props) => {
 
 const Container = styled.div`
   margin: auto;
-  padding: 100px;
+  padding: 50px 100px;
   height: 100%;
 
   @media (max-width: 960px) {

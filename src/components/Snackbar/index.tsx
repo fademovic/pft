@@ -38,7 +38,7 @@ export const CustomSnackbar = ({ items }: Props) => {
         {items.map(({ message, type }, index) =>
           Array.isArray(message) ? (
             /*eslint-disable */ //TODO: Fix lint issue
-            message.map((m) => <SnackbarContainer marginb="10px" message={m} type={type} key={index} />)
+            message.map((item) => <SnackbarContainer marginb="10px" message={item} type={type} key={index} />)
           ) : (
             <SnackbarContainer message={message} type={type} key={index} />
           )

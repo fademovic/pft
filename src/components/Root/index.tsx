@@ -18,8 +18,8 @@ const Root = () => {
 
   const renderComponents = (routesToRender: Array<RouteType>) => (
     <Routes>
-      {routesToRender.map((r, i) => (
-        <Route key={i} path={r.path} element={r.Component()} />
+      {routesToRender.map((route, i) => (
+        <Route key={i} path={route.path} element={route.Component()} />
       ))}
     </Routes>
   );
